@@ -6,7 +6,7 @@
 /*   By: oheinzel <oheinzel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 15:18:06 by oheinzel          #+#    #+#             */
-/*   Updated: 2023/01/27 15:21:54 by oheinzel         ###   ########.fr       */
+/*   Updated: 2023/01/27 16:12:10 by oheinzel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,5 +18,9 @@
 # include <unistd.h>
 # include <sys/time.h>
 # include <pthread.h>
+
+int	ft_atoi(const char *str);
+int	check_input(int argc, char *argv[]);
+
 
 #endif
