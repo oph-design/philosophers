@@ -6,7 +6,7 @@
 #    By: oheinzel <oheinzel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/27 15:12:51 by oheinzel          #+#    #+#              #
-#    Updated: 2023/01/27 15:18:03 by oheinzel         ###   ########.fr        #
+#    Updated: 2023/01/27 16:29:58 by oheinzel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ WHITE		= \033[0m
 
 #Sources
 
-SRC_FILES	=	main
+SRC_FILES	=	main input
 
 SRC			=	$(addsuffix .c, $(SRC_FILES))
 OBJ			=	$(addsuffix .o, $(SRC_FILES))

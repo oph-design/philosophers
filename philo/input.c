@@ -6,7 +6,7 @@
 /*   By: oheinzel <oheinzel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 15:57:34 by oheinzel          #+#    #+#             */
-/*   Updated: 2023/01/27 16:22:51 by oheinzel         ###   ########.fr       */
+/*   Updated: 2023/01/27 16:54:34 by oheinzel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	ft_atoi(const char *str)
 		i++;
 	}
 	while ((47 < str[i]) && (str[i] < 58))
-		r = r * 10 + (str[i] - 48);
+		r = r * 10 + (str[i++] - 48);
 	return (f * r);
 }
 
@@ -49,10 +49,12 @@ int	check_input(int argc, char *argv[])
 {
 	if (argc < 5 || argc > 6)
 		return (1);
-	while (++(*argv) != NULL)
+	argv++;
+	while (*argv != NULL)
 	{
 		if (check_num(*argv) || **argv == 0)
 			return (1);
+		argv++;
 	}
 	return (0);
 }
