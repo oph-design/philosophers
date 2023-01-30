@@ -6,7 +6,7 @@
 /*   By: oheinzel <oheinzel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 15:21:56 by oheinzel          #+#    #+#             */
-/*   Updated: 2023/01/27 16:38:47 by oheinzel         ###   ########.fr       */
+/*   Updated: 2023/01/30 13:19:57 by oheinzel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,10 @@
 
 int	main(int argc, char *argv[])
 {
-	unsigned int	number_of_philos;
-	unsigned int	time_to_die;
-	unsigned int	time_to_eat;
-	unsigned int	time_to_sleep;
-	int				notepme;
+	t_param	*param;
 
 	if (check_input(argc, argv))
 		return (printf("ERROR: wrong input\n"), 1);
-	number_of_philos = ft_atoi(argv[1]);
-	time_to_die = ft_atoi(argv[2]);
-	time_to_eat = ft_atoi(argv[3]);
-	time_to_sleep = ft_atoi(argv[4]);
-	notepme = -1;
-	if (argc == 6)
-		notepme = ft_atoi(argv[5]);
+	param = init_param(argv, argc);
 	return (0);
 }

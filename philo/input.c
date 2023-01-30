@@ -6,7 +6,7 @@
 /*   By: oheinzel <oheinzel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 15:57:34 by oheinzel          #+#    #+#             */
-/*   Updated: 2023/01/27 16:54:34 by oheinzel         ###   ########.fr       */
+/*   Updated: 2023/01/30 13:18:40 by oheinzel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static int	check_num(char *str)
 	return (0);
 }
 
-int	ft_atoi(const char *str)
+static int	ft_atoi(const char *str)
 {
 	int	i;
 	int	f;
@@ -57,4 +57,19 @@ int	check_input(int argc, char *argv[])
 		argv++;
 	}
 	return (0);
+}
+
+t_param	*init_param(char *argv[], int argc)
+{
+	t_param	*new;
+
+	new = malloc(sizeof(t_param *));
+	new->number_of_philos = ft_atoi(argv[1]);
+	new->time_to_die = ft_atoi(argv[2]);
+	new->time_to_eat = ft_atoi(argv[3]);
+	new->time_to_sleep = ft_atoi(argv[4]);
+	new->notepme = -1;
+	if (argc == 6)
+		new->notepme = ft_atoi(argv[5]);
+	return	(new);
 }

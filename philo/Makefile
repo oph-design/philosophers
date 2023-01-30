@@ -6,7 +6,7 @@
 #    By: oheinzel <oheinzel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/27 15:12:51 by oheinzel          #+#    #+#              #
-#    Updated: 2023/01/27 16:29:58 by oheinzel         ###   ########.fr        #
+#    Updated: 2023/01/30 13:21:41 by oheinzel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,14 +19,10 @@ GREEN		= \033[0;32m
 CYAN		= \033[0;36m
 WHITE		= \033[0m
 
-#Sources
-
 SRC_FILES	=	main input
 
 SRC			=	$(addsuffix .c, $(SRC_FILES))
 OBJ			=	$(addsuffix .o, $(SRC_FILES))
-
-###
 
 all:		$(NAME)
 
@@ -40,7 +36,6 @@ $(NAME):	$(OBJ)
 
 clean:
 			@$(RM) $(OBJ)
-			@make clean -C $(LIBFT)
 			@echo "$(GREEN)philo object files cleaned!$(WHITE)"
 
 fclean:		clean

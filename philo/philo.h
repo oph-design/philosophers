@@ -6,7 +6,7 @@
 /*   By: oheinzel <oheinzel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 15:18:06 by oheinzel          #+#    #+#             */
-/*   Updated: 2023/01/27 16:12:10 by oheinzel         ###   ########.fr       */
+/*   Updated: 2023/01/30 13:19:04 by oheinzel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,16 @@
 # include <sys/time.h>
 # include <pthread.h>
 
-int	ft_atoi(const char *str);
-int	check_input(int argc, char *argv[]);
+typedef struct s_param
+{
+	unsigned int	number_of_philos;
+	unsigned int	time_to_die;
+	unsigned int	time_to_eat;
+	unsigned int	time_to_sleep;
+	int				notepme;
+}					t_param;
 
+t_param	*init_param(char *argv[], int argc);
+int		check_input(int argc, char *argv[]);
 
 #endif
