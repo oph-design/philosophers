@@ -6,7 +6,7 @@
 /*   By: oheinzel <oheinzel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 15:18:06 by oheinzel          #+#    #+#             */
-/*   Updated: 2023/01/30 13:19:04 by oheinzel         ###   ########.fr       */
+/*   Updated: 2023/01/31 10:50:45 by oheinzel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,13 @@
 # include <sys/time.h>
 # include <pthread.h>
 
+typedef struct s_philo
+{
+	pthread_t		id;
+	pthread_mutex_t	fork;
+	struct s_philo	*next;
+}					t_philo;
+
 typedef struct s_param
 {
 	unsigned int	number_of_philos;
@@ -26,9 +33,11 @@ typedef struct s_param
 	unsigned int	time_to_eat;
 	unsigned int	time_to_sleep;
 	int				notepme;
+	t_philo			*philos;
 }					t_param;
 
-t_param	*init_param(char *argv[], int argc);
-int		check_input(int argc, char *argv[]);
+int			ft_atoi(const char *str);
+void		*routine(void *param);
+void		init_threads(t_param *param);
 
 #endif

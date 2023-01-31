@@ -6,20 +6,20 @@
 #    By: oheinzel <oheinzel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/27 15:12:51 by oheinzel          #+#    #+#              #
-#    Updated: 2023/01/30 13:21:41 by oheinzel         ###   ########.fr        #
+#    Updated: 2023/01/31 10:51:38 by oheinzel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		= philo
 CC			= cc
-CFLAGS		= -Wall -Werror -Wextra
+CFLAGS		= -Wall -Werror -Wextra -pthread
 RM			= rm -f
 
 GREEN		= \033[0;32m
 CYAN		= \033[0;36m
 WHITE		= \033[0m
 
-SRC_FILES	=	main input
+SRC_FILES	= main utils setup
 
 SRC			=	$(addsuffix .c, $(SRC_FILES))
 OBJ			=	$(addsuffix .o, $(SRC_FILES))
