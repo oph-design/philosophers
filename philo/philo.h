@@ -6,7 +6,7 @@
 /*   By: oheinzel <oheinzel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 15:18:06 by oheinzel          #+#    #+#             */
-/*   Updated: 2023/01/31 10:50:45 by oheinzel         ###   ########.fr       */
+/*   Updated: 2023/02/01 11:13:14 by oheinzel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@
 
 typedef struct s_philo
 {
+	int				nbr;
 	pthread_t		id;
 	pthread_mutex_t	fork;
-	struct s_philo	*next;
 }					t_philo;
 
 typedef struct s_param
@@ -34,10 +34,10 @@ typedef struct s_param
 	unsigned int	time_to_sleep;
 	int				notepme;
 	t_philo			*philos;
+	pthread_mutex_t	test;
 }					t_param;
 
 int			ft_atoi(const char *str);
 void		*routine(void *param);
-void		init_threads(t_param *param);
 
 #endif

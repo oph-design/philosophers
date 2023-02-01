@@ -6,7 +6,7 @@
 /*   By: oheinzel <oheinzel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 15:21:56 by oheinzel          #+#    #+#             */
-/*   Updated: 2023/01/31 10:51:25 by oheinzel         ###   ########.fr       */
+/*   Updated: 2023/02/01 11:21:24 by oheinzel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,19 +47,45 @@ static t_param	*init_param(int argc, char *argv[])
 	new->time_to_sleep = ft_atoi(argv[3]);
 	new->notepme = -1;
 	new->philos = NULL;
+	pthread_mutex_init(&new->test, NULL);
 	if (argc == 6)
 		new->notepme = ft_atoi(argv[4]);
 	return (new);
 }
 
+static t_philo	*init_threads(t_param *param)
+{
+	unsigned int	i;
+	t_philo			*new;
+
+	i = 0;
+	new = malloc(sizeof(t_philo) * (param->number_of_philos));
+	while (i < param->number_of_philos)
+	{
+		new[i].nbr = i + 1;
+		new[i].id = NULL;
+		printf("%d\n", new[i].nbr);
+		pthread_mutex_init(&(new[i++].fork), NULL);
+		//pthread_create(&(new[i++].id), NULL, &routine, param);
+	}
+	return (new);
+}
+
 int	main(int argc, char *argv[])
 {
-	t_param	*param;
+	t_param			*param;
+	unsigned int	i;
 
+	i = 0;
 	if (check_input(argc, ++argv))
 		return (printf("ERROR: wrong input\n"), 1);
 	param = init_param(argc, argv);
-	init_threads(param);
-	usleep(500);
+	param->philos = init_threads(param);
+	while (i < param->number_of_philos)
+	{
+		pthread_create(&(param->philos[i].id), NULL, &routine, param);
+		i++;
+		usleep(30);
+	}
 	return (0);
 }
