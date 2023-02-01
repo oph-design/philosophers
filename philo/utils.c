@@ -6,7 +6,7 @@
 /*   By: oheinzel <oheinzel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 10:14:38 by oheinzel          #+#    #+#             */
-/*   Updated: 2023/02/01 11:23:04 by oheinzel         ###   ########.fr       */
+/*   Updated: 2023/02/01 18:08:44 by oheinzel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,9 @@ int	ft_atoi(const char *str)
 
 void	*routine(void *param)
 {
-	t_param		*phil;
-	static int	i = 0;
+	t_philo	*phil;
 
 	phil = param;
-	pthread_mutex_lock(&phil->test);
-	printf("phil %d: unehre\n", phil->philos[i++].nbr);
-	pthread_mutex_unlock(&phil->test);
+	printf("phil %u: unehre\n", phil->nbr);
 	return (NULL);
 }
