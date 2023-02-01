@@ -6,7 +6,7 @@
 /*   By: oheinzel <oheinzel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 15:21:56 by oheinzel          #+#    #+#             */
-/*   Updated: 2023/02/01 18:12:58 by oheinzel         ###   ########.fr       */
+/*   Updated: 2023/02/01 18:23:00 by oheinzel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static t_param	*init_param(int argc, char *argv[])
 
 	new = malloc(sizeof(t_param *));
 	if (new == NULL)
-		exit(1);
+		ft_exit("ERROR: failed to create struct", NULL, NULL);
 	new->number_of_philos = ft_atoi(argv[0]);
 	new->time_to_die = ft_atoi(argv[1]);
 	new->time_to_eat = ft_atoi(argv[2]);
@@ -61,7 +61,7 @@ static t_philo	*create_philos(t_param *param)
 	i = 0;
 	new = malloc(sizeof(t_philo) * (param->number_of_philos));
 	if (new == NULL)
-		exit(1);
+		ft_exit("ERROR: failed to create struct", NULL, param);
 	while (i < param->number_of_philos)
 	{
 		new[i].nbr = i + 1;

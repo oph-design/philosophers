@@ -6,7 +6,7 @@
 /*   By: oheinzel <oheinzel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 15:18:06 by oheinzel          #+#    #+#             */
-/*   Updated: 2023/02/01 18:09:15 by oheinzel         ###   ########.fr       */
+/*   Updated: 2023/02/01 18:21:50 by oheinzel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,6 @@ typedef struct s_philo
 
 int			ft_atoi(const char *str);
 void		*routine(void *param);
+void		ft_exit(char *mess, t_philo *phil, t_param *param);
 
 #endif
