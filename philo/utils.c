@@ -6,7 +6,7 @@
 /*   By: oheinzel <oheinzel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 10:14:38 by oheinzel          #+#    #+#             */
-/*   Updated: 2023/02/02 10:54:15 by oheinzel         ###   ########.fr       */
+/*   Updated: 2023/02/02 18:54:08 by oheinzel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,10 @@ void	*routine(void *param)
 	t_philo	*phil;
 
 	phil = param;
-	pthread_mutex_lock(&phil->r_fork);
-	printf("phil %u: has taken a fork\n", phil->id);
-	pthread_mutex_lock(phil->l_fork);
-	printf("phil %u: has taken a fork\n", phil->id);
-	pthread_mutex_unlock(&phil->r_fork);
-	pthread_mutex_unlock(phil->l_fork);
+	while (1)
+	{
+		printf("phil %u: unehre\n", phil->id);
+		usleep(100000);
+	}
 	return (NULL);
 }

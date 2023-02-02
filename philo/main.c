@@ -6,7 +6,7 @@
 /*   By: oheinzel <oheinzel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 15:21:56 by oheinzel          #+#    #+#             */
-/*   Updated: 2023/02/02 10:58:54 by oheinzel         ###   ########.fr       */
+/*   Updated: 2023/02/02 18:52:06 by oheinzel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,8 @@ int	main(int argc, char *argv[])
 	while (i++ < param->number_of_philos)
 		if (pthread_create(&(phils[i - 1].thr), NULL, &routine, &phils[i - 1]))
 			ft_exit("philo: not able to initialize thread", phils, param);
-	usleep(1000);
+	while (i && pthread_join(phils[i - 1].thr, NULL))
+		i--;
 	free(phils);
 	free(param);
 	return (0);
