@@ -6,21 +6,11 @@
 /*   By: oheinzel <oheinzel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 10:14:38 by oheinzel          #+#    #+#             */
-/*   Updated: 2023/02/01 18:21:18 by oheinzel         ###   ########.fr       */
+/*   Updated: 2023/02/02 10:54:15 by oheinzel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-int	ft_strlen(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
-}
 
 int	ft_atoi(const char *str)
 {
@@ -45,9 +35,15 @@ int	ft_atoi(const char *str)
 
 void	ft_exit(char *mess, t_philo *phil, t_param *param)
 {
+	int	i;
+
+	i = 0;
+	while (mess[i])
+		i++;
+	write(2, mess, i);
+	write(2, "\n", 1);
 	free(phil);
 	free(param);
-	write(2, mess, ft_strlen(mess));
 	exit(1);
 }
 
@@ -56,6 +52,11 @@ void	*routine(void *param)
 	t_philo	*phil;
 
 	phil = param;
-	printf("phil %u: unehre\n", phil->nbr);
+	pthread_mutex_lock(&phil->r_fork);
+	printf("phil %u: has taken a fork\n", phil->id);
+	pthread_mutex_lock(phil->l_fork);
+	printf("phil %u: has taken a fork\n", phil->id);
+	pthread_mutex_unlock(&phil->r_fork);
+	pthread_mutex_unlock(phil->l_fork);
 	return (NULL);
 }

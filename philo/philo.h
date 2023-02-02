@@ -6,7 +6,7 @@
 /*   By: oheinzel <oheinzel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 15:18:06 by oheinzel          #+#    #+#             */
-/*   Updated: 2023/02/01 18:21:50 by oheinzel         ###   ########.fr       */
+/*   Updated: 2023/02/02 10:58:04 by oheinzel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,11 @@ typedef struct s_param
 
 typedef struct s_philo
 {
-	int				nbr;
+	unsigned int	id;
 	t_param			*param;
-	pthread_t		id;
-	pthread_mutex_t	fork;
+	pthread_t		thr;
+	pthread_mutex_t	*l_fork;
+	pthread_mutex_t	r_fork;
 }					t_philo;
 
 int			ft_atoi(const char *str);

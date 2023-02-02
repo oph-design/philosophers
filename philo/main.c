@@ -6,7 +6,7 @@
 /*   By: oheinzel <oheinzel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 15:21:56 by oheinzel          #+#    #+#             */
-/*   Updated: 2023/02/01 18:23:00 by oheinzel         ###   ########.fr       */
+/*   Updated: 2023/02/02 10:58:54 by oheinzel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static t_param	*init_param(int argc, char *argv[])
 
 	new = malloc(sizeof(t_param *));
 	if (new == NULL)
-		ft_exit("ERROR: failed to create struct", NULL, NULL);
+		ft_exit("philo: failed to initialize param struct", NULL, NULL);
 	new->number_of_philos = ft_atoi(argv[0]);
 	new->time_to_die = ft_atoi(argv[1]);
 	new->time_to_eat = ft_atoi(argv[2]);
@@ -61,30 +61,36 @@ static t_philo	*create_philos(t_param *param)
 	i = 0;
 	new = malloc(sizeof(t_philo) * (param->number_of_philos));
 	if (new == NULL)
-		ft_exit("ERROR: failed to create struct", NULL, param);
+		ft_exit("philo: failed to initialize phil array", NULL, param);
 	while (i < param->number_of_philos)
 	{
-		new[i].nbr = i + 1;
-		new[i].id = NULL;
+		new[i].id = i + 1;
+		new[i].thr = NULL;
 		new[i].param = param;
-		pthread_mutex_init(&(new[i++].fork), NULL);
+		if (i != 0)
+			new[i].l_fork = &new[i - 1].r_fork;
+		pthread_mutex_init(&(new[i++].r_fork), NULL);
 	}
+	new[0].l_fork = &new[i - 1].r_fork;
 	return (new);
 }
 
 int	main(int argc, char *argv[])
 {
 	t_param			*param;
-	t_philo			*phil;
+	t_philo			*phils;
 	unsigned int	i;
 
 	i = 0;
 	if (check_input(argc, ++argv))
-		return (printf("ERROR: wrong input\n"), 1);
+		ft_exit("philo: wrong input", NULL, NULL);
 	param = init_param(argc, argv);
-	phil = create_philos(param);
+	phils = create_philos(param);
 	while (i++ < param->number_of_philos)
-		pthread_create(&(phil[i - 1].id), NULL, &routine, &phil[i - 1]);
-	usleep(500);
+		if (pthread_create(&(phils[i - 1].thr), NULL, &routine, &phils[i - 1]))
+			ft_exit("philo: not able to initialize thread", phils, param);
+	usleep(1000);
+	free(phils);
+	free(param);
 	return (0);
 }
