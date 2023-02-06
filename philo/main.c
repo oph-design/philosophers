@@ -6,7 +6,7 @@
 /*   By: oheinzel <oheinzel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 15:21:56 by oheinzel          #+#    #+#             */
-/*   Updated: 2023/02/06 14:24:40 by oheinzel         ###   ########.fr       */
+/*   Updated: 2023/02/06 14:54:03 by oheinzel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,8 @@ static t_philo	*create_philos(t_param *param)
 		new[i].param = param;
 		if (i != 0)
 			new[i].l_fork = &new[i - 1].r_fork;
-		pthread_mutex_init(&(new[i++].r_fork), NULL);
+		if(pthread_mutex_init(&(new[i++].r_fork), NULL))
+			ft_exit("philo: failed to initialize mutex", new, param);
 	}
 	new[0].l_fork = &new[i - 1].r_fork;
 	return (new);

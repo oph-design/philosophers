@@ -6,7 +6,7 @@
 /*   By: oheinzel <oheinzel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 10:50:36 by oheinzel          #+#    #+#             */
-/*   Updated: 2023/02/06 14:44:04 by oheinzel         ###   ########.fr       */
+/*   Updated: 2023/02/06 17:11:53 by oheinzel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,31 @@ void	*routine(void *param)
 	t_philo	*phil;
 
 	phil = param;
-	pthread_mutex_lock(&phil->param->pdead);
-	ft_usleep(phil->param->time_to_eat);
-	printf("\033[0;97mphil %u: %ld unehre\n", phil->id, get_time() - phil->param->time);
-	pthread_mutex_unlock(&phil->param->pdead);
-	//phil->is_dead = 1;
+	if ((phil->id) % 2 == 0)
+	{
+		printf("\033[0;33m%ld phil %u: is thinking\n",
+			get_time() - phil->param->time, phil->id);
+		usleep(30);
+	}
+	while (1)
+	{
+		pthread_mutex_lock(&phil->r_fork);
+		printf("\033[0;36m%ld phil %u: picked up fork\n",
+			get_time() - phil->param->time, phil->id);
+		pthread_mutex_lock(phil->l_fork);
+		printf("\033[0;36m%ld phil %u: picked up fork\n",
+			get_time() - phil->param->time, phil->id);
+		printf("\033[0;34m%ld phil %u: is eating\n",
+			get_time() - phil->param->time, phil->id);
+		ft_usleep(phil->param->time_to_eat);
+		pthread_mutex_unlock(&phil->r_fork);
+		pthread_mutex_unlock(phil->l_fork);
+		printf("\033[0;32m%ld phil %u: is sleeping\n",
+			get_time() - phil->param->time, phil->id);
+		ft_usleep(phil->param->time_to_sleep);
+		printf("\033[0;33m%ld phil %u: is thinking\n",
+			get_time() - phil->param->time, phil->id);
+	}
 	return (NULL);
 }
 
