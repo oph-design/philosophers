@@ -6,7 +6,7 @@
 /*   By: oheinzel <oheinzel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 15:18:06 by oheinzel          #+#    #+#             */
-/*   Updated: 2023/02/06 19:42:41 by oheinzel         ###   ########.fr       */
+/*   Updated: 2023/02/06 20:30:19 by oheinzel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,14 @@
 # include <unistd.h>
 # include <sys/time.h>
 # include <pthread.h>
+
+typedef enum e_print
+{
+	take_fork,
+	eating,
+	sleeping,
+	thinking
+}	t_print;
 
 typedef struct s_param
 {
