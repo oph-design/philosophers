@@ -6,7 +6,7 @@
 /*   By: oheinzel <oheinzel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 15:21:56 by oheinzel          #+#    #+#             */
-/*   Updated: 2023/02/06 14:54:03 by oheinzel         ###   ########.fr       */
+/*   Updated: 2023/02/06 19:46:15 by oheinzel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,12 +67,12 @@ static t_philo	*create_philos(t_param *param)
 	while (i < param->number_of_philos)
 	{
 		new[i].id = i + 1;
-		new[i].is_dead = 0;
+		new[i].has_eaten = get_time();
 		new[i].thr = NULL;
 		new[i].param = param;
 		if (i != 0)
 			new[i].l_fork = &new[i - 1].r_fork;
-		if(pthread_mutex_init(&(new[i++].r_fork), NULL))
+		if (pthread_mutex_init(&(new[i++].r_fork), NULL))
 			ft_exit("philo: failed to initialize mutex", new, param);
 	}
 	new[0].l_fork = &new[i - 1].r_fork;

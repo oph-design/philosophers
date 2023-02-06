@@ -6,7 +6,7 @@
 /*   By: oheinzel <oheinzel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 15:18:06 by oheinzel          #+#    #+#             */
-/*   Updated: 2023/02/06 14:40:06 by oheinzel         ###   ########.fr       */
+/*   Updated: 2023/02/06 19:42:41 by oheinzel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ typedef struct s_param
 typedef struct s_philo
 {
 	unsigned int	id;
-	int				is_dead;
+	long			has_eaten;
 	t_param			*param;
 	pthread_t		thr;
 	pthread_mutex_t	*l_fork;
