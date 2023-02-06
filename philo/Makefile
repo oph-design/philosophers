@@ -6,7 +6,7 @@
 #    By: oheinzel <oheinzel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/27 15:12:51 by oheinzel          #+#    #+#              #
-#    Updated: 2023/02/01 10:26:30 by oheinzel         ###   ########.fr        #
+#    Updated: 2023/02/03 13:24:05 by oheinzel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ GREEN		= \033[0;32m
 CYAN		= \033[0;36m
 WHITE		= \033[0m
 
-SRC_FILES	= main utils
+SRC_FILES	= main utils routine
 
 SRC			=	$(addsuffix .c, $(SRC_FILES))
 OBJ			=	$(addsuffix .o, $(SRC_FILES))

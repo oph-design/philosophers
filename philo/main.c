@@ -6,7 +6,7 @@
 /*   By: oheinzel <oheinzel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 15:21:56 by oheinzel          #+#    #+#             */
-/*   Updated: 2023/02/02 18:52:06 by oheinzel         ###   ########.fr       */
+/*   Updated: 2023/02/06 14:24:40 by oheinzel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,15 @@ static t_param	*init_param(int argc, char *argv[])
 {
 	t_param	*new;
 
-	new = malloc(sizeof(t_param *));
+	new = malloc(sizeof(t_param));
 	if (new == NULL)
 		ft_exit("philo: failed to initialize param struct", NULL, NULL);
 	new->number_of_philos = ft_atoi(argv[0]);
 	new->time_to_die = ft_atoi(argv[1]);
 	new->time_to_eat = ft_atoi(argv[2]);
 	new->time_to_sleep = ft_atoi(argv[3]);
+	new->time = get_time();
+	pthread_mutex_init(&new->pdead, NULL);
 	new->notepme = -1;
 	if (argc == 6)
 		new->notepme = ft_atoi(argv[4]);
@@ -65,6 +67,7 @@ static t_philo	*create_philos(t_param *param)
 	while (i < param->number_of_philos)
 	{
 		new[i].id = i + 1;
+		new[i].is_dead = 0;
 		new[i].thr = NULL;
 		new[i].param = param;
 		if (i != 0)
@@ -79,9 +82,11 @@ int	main(int argc, char *argv[])
 {
 	t_param			*param;
 	t_philo			*phils;
+	pthread_t		thr;
 	unsigned int	i;
 
 	i = 0;
+	thr = NULL;
 	if (check_input(argc, ++argv))
 		ft_exit("philo: wrong input", NULL, NULL);
 	param = init_param(argc, argv);
@@ -89,8 +94,8 @@ int	main(int argc, char *argv[])
 	while (i++ < param->number_of_philos)
 		if (pthread_create(&(phils[i - 1].thr), NULL, &routine, &phils[i - 1]))
 			ft_exit("philo: not able to initialize thread", phils, param);
-	while (i && pthread_join(phils[i - 1].thr, NULL))
-		i--;
+	pthread_create(&thr, NULL, &death, phils);
+	pthread_join(thr, NULL);
 	free(phils);
 	free(param);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: oheinzel <oheinzel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 10:14:38 by oheinzel          #+#    #+#             */
-/*   Updated: 2023/02/02 18:54:08 by oheinzel         ###   ########.fr       */
+/*   Updated: 2023/02/06 14:45:41 by oheinzel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,15 +47,19 @@ void	ft_exit(char *mess, t_philo *phil, t_param *param)
 	exit(1);
 }
 
-void	*routine(void *param)
+long	get_time(void)
 {
-	t_philo	*phil;
+	struct timeval	time;
 
-	phil = param;
-	while (1)
-	{
-		printf("phil %u: unehre\n", phil->id);
-		usleep(100000);
-	}
-	return (NULL);
+	gettimeofday(&time, NULL);
+	return (time.tv_sec * 1000 + time.tv_usec / 1000);
+}
+
+void	ft_usleep(long sleep)
+{
+	long	start;
+
+	start = get_time();
+	while ((get_time() - start) < sleep)
+		usleep(100);
 }
