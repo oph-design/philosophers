@@ -6,7 +6,7 @@
 /*   By: oheinzel <oheinzel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 10:50:36 by oheinzel          #+#    #+#             */
-/*   Updated: 2023/02/07 11:37:38 by oheinzel         ###   ########.fr       */
+/*   Updated: 2023/02/07 13:13:37 by oheinzel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ static void	print_action(t_print action, t_philo *phil)
 	char			*s;
 	pthread_mutex_t	test;
 
-	s = NULL;
 	if (action != die && action != eaten)
 		test = phil->param->stop;
 	if (action == take_fork)
@@ -69,6 +68,13 @@ void	*routine(void *input)
 	return (NULL);
 }
 
+static int	check_death(t_philo *phils, t_param *param, unsigned int i)
+{
+	return (get_time() - phils[i].has_eaten < param->time_to_die
+		&& ((param->notepme >= 0 && param->eat_count < param->notepme)
+			|| param->notepme < 0));
+}
+
 void	*death(void *input)
 {
 	unsigned int	i;
@@ -78,9 +84,7 @@ void	*death(void *input)
 	i = 0;
 	phils = input;
 	param = phils->param;
-	while (get_time() - phils[i].has_eaten < param->time_to_die
-		&& ((param->notepme >= 0 && param->eat_count < param->notepme)
-			|| param->notepme < 0))
+	while (check_death(phils, param, i))
 		if (++i == param->nbr_philos)
 			i = 0;
 	pthread_mutex_lock(&param->stop);
@@ -88,10 +92,9 @@ void	*death(void *input)
 		print_action(eaten, &phils[i]);
 	else
 		print_action(die, &phils[i]);
-	i = 0;
-	while (i < param->nbr_philos)
-		pthread_detach(phils[i++].thr);
-	i = 0;
+	i = param->nbr_philos;
+	while (i--)
+		pthread_detach(phils[i].thr);
 	while (i < param->nbr_philos)
 		pthread_mutex_destroy(&phils[i++].r_fork);
 	pthread_mutex_destroy(&param->eating);

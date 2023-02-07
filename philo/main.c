@@ -6,7 +6,7 @@
 /*   By: oheinzel <oheinzel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 15:21:56 by oheinzel          #+#    #+#             */
-/*   Updated: 2023/02/07 11:39:02 by oheinzel         ###   ########.fr       */
+/*   Updated: 2023/02/07 13:24:40 by oheinzel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,11 @@ static t_param	*init_param(int argc, char *argv[])
 
 	new = malloc(sizeof(t_param));
 	if (new == NULL)
-		ft_exit("philo: param init fail", NULL, NULL, 0);
+		ft_exit("error: struct init fail", NULL, NULL, 0);
 	if (pthread_mutex_init(&new->stop, NULL))
-		ft_exit("philo: mutex init fail", NULL, new, 0);
+		ft_exit("error: mutex init fail", NULL, new, 0);
 	if (pthread_mutex_init(&new->eating, NULL))
-		ft_exit("philo: mutex init fail", NULL, new, 0);
+		ft_exit("error: mutex init fail", NULL, new, 0);
 	new->nbr_philos = ft_atoi(argv[0], new);
 	new->time_to_die = ft_atoi(argv[1], new);
 	new->time_to_eat = ft_atoi(argv[2], new);
@@ -67,7 +67,7 @@ static t_philo	*create_philos(t_param *param)
 	i = 0;
 	new = malloc(sizeof(t_philo) * (param->nbr_philos));
 	if (new == NULL)
-		ft_exit("philo: philo init fail", NULL, param, 0);
+		ft_exit("error: struct init fail", NULL, param, 0);
 	while (i < param->nbr_philos)
 	{
 		new[i].id = i + 1;
@@ -77,7 +77,7 @@ static t_philo	*create_philos(t_param *param)
 		if (i != 0)
 			new[i].l_fork = &new[i - 1].r_fork;
 		if (pthread_mutex_init(&(new[i++].r_fork), NULL))
-			ft_exit("philo: mutex init fail", new, param, i);
+			ft_exit("error: mutex init fail", new, param, i);
 	}
 	new[0].l_fork = &new[i - 1].r_fork;
 	return (new);
@@ -93,12 +93,12 @@ int	main(int argc, char *argv[])
 	i = 0;
 	thr = NULL;
 	if (check_input(argc, ++argv))
-		ft_exit("philo: wrong input", NULL, NULL, 0);
+		ft_exit("error: wrong input", NULL, NULL, 0);
 	param = init_param(argc, argv);
 	phils = create_philos(param);
 	while (i++ < param->nbr_philos)
 		if (pthread_create(&(phils[i - 1].thr), NULL, &routine, &phils[i - 1]))
-			ft_exit("philo: thread init fail", phils, param, param->nbr_philos);
+			ft_exit("error: thread init fail", phils, param, param->nbr_philos);
 	pthread_create(&thr, NULL, &death, phils);
 	pthread_join(thr, NULL);
 	free(phils);
