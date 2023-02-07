@@ -6,7 +6,7 @@
 /*   By: oheinzel <oheinzel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 10:50:36 by oheinzel          #+#    #+#             */
-/*   Updated: 2023/02/07 13:13:37 by oheinzel         ###   ########.fr       */
+/*   Updated: 2023/02/07 13:32:45 by oheinzel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ static int	check_death(t_philo *phils, t_param *param, unsigned int i)
 			|| param->notepme < 0));
 }
 
-void	*death(void *input)
+void	*death_watch(void *input)
 {
 	unsigned int	i;
 	t_philo			*phils;

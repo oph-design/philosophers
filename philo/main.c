@@ -6,7 +6,7 @@
 /*   By: oheinzel <oheinzel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 15:21:56 by oheinzel          #+#    #+#             */
-/*   Updated: 2023/02/07 13:24:40 by oheinzel         ###   ########.fr       */
+/*   Updated: 2023/02/07 13:32:56 by oheinzel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int	main(int argc, char *argv[])
 	while (i++ < param->nbr_philos)
 		if (pthread_create(&(phils[i - 1].thr), NULL, &routine, &phils[i - 1]))
 			ft_exit("error: thread init fail", phils, param, param->nbr_philos);
-	pthread_create(&thr, NULL, &death, phils);
+	pthread_create(&thr, NULL, &death_watch, phils);
 	pthread_join(thr, NULL);
 	free(phils);
 	free(param);
