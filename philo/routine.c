@@ -6,7 +6,7 @@
 /*   By: oheinzel <oheinzel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 10:50:36 by oheinzel          #+#    #+#             */
-/*   Updated: 2023/02/07 11:31:40 by oheinzel         ###   ########.fr       */
+/*   Updated: 2023/02/07 11:37:38 by oheinzel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,8 @@ void	*death(void *input)
 	phils = input;
 	param = phils->param;
 	while (get_time() - phils[i].has_eaten < param->time_to_die
-		&& (param->notepme < 0
-			|| (param->notepme >= 0 && param->eat_count < param->notepme)))
+		&& ((param->notepme >= 0 && param->eat_count < param->notepme)
+			|| param->notepme < 0))
 		if (++i == param->nbr_philos)
 			i = 0;
 	pthread_mutex_lock(&param->stop);
