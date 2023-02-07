@@ -6,7 +6,7 @@
 /*   By: oheinzel <oheinzel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 15:18:06 by oheinzel          #+#    #+#             */
-/*   Updated: 2023/02/07 13:32:35 by oheinzel         ###   ########.fr       */
+/*   Updated: 2023/02/07 13:51:50 by oheinzel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ typedef enum e_print
 	eating,
 	sleeping,
 	thinking,
-	die,
+	death,
 	eaten
 }	t_print;
 

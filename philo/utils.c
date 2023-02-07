@@ -6,7 +6,7 @@
 /*   By: oheinzel <oheinzel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 10:14:38 by oheinzel          #+#    #+#             */
-/*   Updated: 2023/02/07 13:23:43 by oheinzel         ###   ########.fr       */
+/*   Updated: 2023/02/07 14:00:02 by oheinzel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,20 +26,20 @@ int	ft_atoi(const char *str, t_param *param)
 	return (r);
 }
 
-void	ft_exit(char *mess, t_philo *phil, t_param *param, long ph_count)
+void	ft_exit(char *mess, t_philo *phils, t_param *param, long ph_count)
 {
 	long	len;
 
 	len = 0;
 	while (mess[len])
 		len++;
-	while (phil != NULL && ph_count--)
-		pthread_mutex_destroy(&phil[ph_count].r_fork);
+	while (phils != NULL && ph_count--)
+		pthread_mutex_destroy(&phils[ph_count].r_fork);
 	if (param != NULL)
 		pthread_mutex_destroy(&param->stop);
 	if (param != NULL)
 		pthread_mutex_destroy(&param->eating);
-	free(phil);
+	free(phils);
 	free(param);
 	write(2, "\033[0;31m", 7);
 	write(2, mess, len);
