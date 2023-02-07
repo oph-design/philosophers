@@ -6,13 +6,13 @@
 #    By: oheinzel <oheinzel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/27 15:12:51 by oheinzel          #+#    #+#              #
-#    Updated: 2023/02/03 13:24:05 by oheinzel         ###   ########.fr        #
+#    Updated: 2023/02/07 17:46:15 by oheinzel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		= philo
 CC			= cc
-CFLAGS		= -Wall -Werror -Wextra -g
+CFLAGS		= -g #-Wall -Werror -Wextra -g
 RM			= rm -f
 
 GREEN		= \033[0;32m

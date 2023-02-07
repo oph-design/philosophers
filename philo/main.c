@@ -6,7 +6,7 @@
 /*   By: oheinzel <oheinzel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 15:21:56 by oheinzel          #+#    #+#             */
-/*   Updated: 2023/02/07 17:23:54 by oheinzel         ###   ########.fr       */
+/*   Updated: 2023/02/07 17:54:00 by oheinzel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ static t_philo	*create_philos(t_param *param)
 	{
 		new[i].id = i + 1;
 		new[i].has_eaten = get_time();
-		new[i].thr = NULL;
+		new[i].thr = 0;
 		new[i].param = param;
 		if (i != 0)
 			new[i].l_fork = &new[i - 1].r_fork;
@@ -93,7 +93,7 @@ int	main(int argc, char *argv[])
 	unsigned int	i;
 
 	i = 0;
-	thr = NULL;
+	thr = 0;
 	if (check_input(argc, ++argv))
 		ft_exit("error: wrong input", NULL, NULL, 0);
 	param = init_param(argc, argv);

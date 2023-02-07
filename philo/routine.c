@@ -6,7 +6,7 @@
 /*   By: oheinzel <oheinzel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 10:50:36 by oheinzel          #+#    #+#             */
-/*   Updated: 2023/02/07 17:27:10 by oheinzel         ###   ########.fr       */
+/*   Updated: 2023/02/07 17:55:37 by oheinzel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	print_action(t_print action, t_philo *phil)
 	if (action != death && action != eaten)
 		test = phil->param->stop;
 	if (action == take_fork)
-		s = "\033[0;34mpicked up fork\033[0;97m";
+		s = "\033[0;34mhas taken a fork\033[0;97m";
 	if (action == eating)
 		s = "\033[0;36mis eating\033[0;97m";
 	if (action == sleeping)
