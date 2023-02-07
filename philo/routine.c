@@ -6,7 +6,7 @@
 /*   By: oheinzel <oheinzel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 10:50:36 by oheinzel          #+#    #+#             */
-/*   Updated: 2023/02/06 20:33:58 by oheinzel         ###   ########.fr       */
+/*   Updated: 2023/02/07 11:31:40 by oheinzel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,25 @@
 
 static void	print_action(t_print action, t_philo *phil)
 {
+	char			*s;
 	pthread_mutex_t	test;
 
-	test = phil->param->pdead;
+	s = NULL;
+	if (action != die && action != eaten)
+		test = phil->param->stop;
 	if (action == take_fork)
-		printf("\033[0;36m%ld philo %u: picked up fork\n",
-			get_time() - phil->param->time, phil->id);
+		s = "\033[0;34mpicked up fork\033[0;97m";
 	if (action == eating)
-		printf("\033[0;34m%ld philo %u: is eating\n",
-			get_time() - phil->param->time, phil->id);
+		s = "\033[0;36mis eating\033[0;97m";
 	if (action == sleeping)
-		printf("\033[0;32m%ld philo %u: is sleeping\n",
-			get_time() - phil->param->time, phil->id);
+		s = "\033[0;32mis sleeping\033[0;97m";
 	if (action == thinking)
-		printf("\033[0;33m%ld philo %u: is thinking\n",
-			get_time() - phil->param->time, phil->id);
+		s = "\033[0;35mis thinking\033[0;97m";
+	if (action == die)
+		s = "\033[0;31mdied\033[0;97m";
+	if (action == eaten)
+		s = "\033[0;33mand everyone else have eaten enough\033[0;97m";
+	printf("%ld philo %u: %s\n", get_time() - phil->param->start, phil->id, s);
 }
 
 static void	eat_sleep_think(t_philo *phil)
@@ -39,6 +43,9 @@ static void	eat_sleep_think(t_philo *phil)
 	print_action(take_fork, phil);
 	print_action(eating, phil);
 	phil->has_eaten = get_time();
+	pthread_mutex_lock(&phil->param->eating);
+	phil->param->eat_count += 1;
+	pthread_mutex_unlock(&phil->param->eating);
 	ft_usleep(phil->param->time_to_eat);
 	pthread_mutex_unlock(&phil->r_fork);
 	pthread_mutex_unlock(phil->l_fork);
@@ -47,15 +54,14 @@ static void	eat_sleep_think(t_philo *phil)
 	print_action(thinking, phil);
 }
 
-void	*routine(void *param)
+void	*routine(void *input)
 {
 	t_philo	*phil;
 
-	phil = param;
+	phil = input;
 	if ((phil->id) % 2 == 0)
 	{
-		printf("\033[0;33m%ld phil %u: is thinking\n",
-			get_time() - phil->param->time, phil->id);
+		print_action(thinking, phil);
 		usleep(30);
 	}
 	while (1)
@@ -63,21 +69,31 @@ void	*routine(void *param)
 	return (NULL);
 }
 
-void	*death(void *param)
+void	*death(void *input)
 {
 	unsigned int	i;
 	t_philo			*phils;
+	t_param			*param;
 
 	i = 0;
-	phils = param;
-	while (get_time() - phils[i].has_eaten < phils->param->time_to_die)
-		if (++i == phils->param->number_of_philos)
+	phils = input;
+	param = phils->param;
+	while (get_time() - phils[i].has_eaten < param->time_to_die
+		&& (param->notepme < 0
+			|| (param->notepme >= 0 && param->eat_count < param->notepme)))
+		if (++i == param->nbr_philos)
 			i = 0;
-	pthread_mutex_lock(&phils->param->pdead);
-	printf("\033[0;31m%ld philo %u: died\n",
-		get_time() - phils->param->time, phils[i].id);
+	pthread_mutex_lock(&param->stop);
+	if (param->eat_count == param->notepme)
+		print_action(eaten, &phils[i]);
+	else
+		print_action(die, &phils[i]);
 	i = 0;
-	while (i < phils->param->number_of_philos)
+	while (i < param->nbr_philos)
 		pthread_detach(phils[i++].thr);
-	return (NULL);
+	i = 0;
+	while (i < param->nbr_philos)
+		pthread_mutex_destroy(&phils[i++].r_fork);
+	pthread_mutex_destroy(&param->eating);
+	return (pthread_mutex_destroy(&param->stop), NULL);
 }
