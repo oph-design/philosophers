@@ -6,7 +6,7 @@
 /*   By: oheinzel <oheinzel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 15:21:56 by oheinzel          #+#    #+#             */
-/*   Updated: 2023/02/07 13:32:56 by oheinzel         ###   ########.fr       */
+/*   Updated: 2023/02/07 17:23:54 by oheinzel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ static t_param	*init_param(int argc, char *argv[])
 	if (pthread_mutex_init(&new->eating, NULL))
 		ft_exit("error: mutex init fail", NULL, new, 0);
 	new->nbr_philos = ft_atoi(argv[0], new);
+	if (new->nbr_philos == 0)
+		ft_exit("error: not enough philos", NULL, new, 0);
 	new->time_to_die = ft_atoi(argv[1], new);
 	new->time_to_eat = ft_atoi(argv[2], new);
 	new->time_to_sleep = ft_atoi(argv[3], new);

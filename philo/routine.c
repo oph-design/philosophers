@@ -6,13 +6,11 @@
 /*   By: oheinzel <oheinzel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 10:50:36 by oheinzel          #+#    #+#             */
-/*   Updated: 2023/02/07 16:52:54 by oheinzel         ###   ########.fr       */
+/*   Updated: 2023/02/07 17:27:10 by oheinzel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-/* ************** philosopher routine ************** */
 
 static void	print_action(t_print action, t_philo *phil)
 {
@@ -36,16 +34,20 @@ static void	print_action(t_print action, t_philo *phil)
 	printf("%ld philo %u: %s\n", get_time() - phil->param->start, phil->id, s);
 }
 
+/* ************** philosopher routine ************** */
+
 static void	eat_sleep_think(t_philo *phil)
 {
 	pthread_mutex_lock(&phil->r_fork);
 	print_action(take_fork, phil);
 	pthread_mutex_lock(phil->l_fork);
 	print_action(take_fork, phil);
-	print_action(eating, phil);
+	if (phil->param->notepme)
+		print_action(eating, phil);
 	phil->has_eaten = get_time();
 	pthread_mutex_lock(&phil->param->eating);
-	phil->param->eat_count += 1;
+	if (phil->param->notepme)
+		phil->param->eat_count += 1;
 	pthread_mutex_unlock(&phil->param->eating);
 	ft_usleep(phil->param->time_to_eat);
 	pthread_mutex_unlock(&phil->r_fork);
