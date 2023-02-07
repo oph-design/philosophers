@@ -6,11 +6,13 @@
 /*   By: oheinzel <oheinzel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 10:50:36 by oheinzel          #+#    #+#             */
-/*   Updated: 2023/02/07 13:32:45 by oheinzel         ###   ########.fr       */
+/*   Updated: 2023/02/07 13:42:08 by oheinzel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+/* ************** philosopher routine ************** */
 
 static void	print_action(t_print action, t_philo *phil)
 {
@@ -60,6 +62,7 @@ void	*routine(void *input)
 	phil = input;
 	if ((phil->id) % 2 == 0)
 	{
+		write(1, "\033[0;97m", 7);
 		print_action(thinking, phil);
 		usleep(30);
 	}
@@ -67,6 +70,8 @@ void	*routine(void *input)
 		eat_sleep_think(phil);
 	return (NULL);
 }
+
+/* ************** death_watch routine ************** */
 
 static int	check_death(t_philo *phils, t_param *param, unsigned int i)
 {
