@@ -6,7 +6,7 @@
 /*   By: oheinzel <oheinzel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 10:50:36 by oheinzel          #+#    #+#             */
-/*   Updated: 2023/02/08 11:21:18 by oheinzel         ###   ########.fr       */
+/*   Updated: 2023/02/08 11:45:06 by oheinzel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,10 @@ static void	print_action(t_print action, t_philo *phil)
 		pthread_mutex_lock(&phil->param->stop);
 		pthread_mutex_unlock(&phil->param->stop);
 	}
-	if (phil->param->loop == 0 && action != death)
+	if (phil->param->loop == 0 && action != death && action != eaten)
 		return ;
+	if (action == death && phil->param->nbr_philos == 1)
+		pthread_mutex_unlock(&phil->r_fork);
 	if (action == take_fork)
 		s = "\033[0;34mhas taken a fork\033[0;97m";
 	if (action == eating)

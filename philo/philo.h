@@ -6,7 +6,7 @@
 /*   By: oheinzel <oheinzel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 15:18:06 by oheinzel          #+#    #+#             */
-/*   Updated: 2023/02/08 11:13:43 by oheinzel         ###   ########.fr       */
+/*   Updated: 2023/02/08 11:32:34 by oheinzel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,12 @@ typedef struct s_param
 	unsigned int	time_to_die;
 	unsigned int	time_to_eat;
 	unsigned int	time_to_sleep;
+	int				loop;
 	long			start;
 	long			notepme;
 	unsigned int	eat_count;
 	pthread_mutex_t	stop;
 	pthread_mutex_t	eating;
-	int				loop;
 }					t_param;
 
 typedef struct s_philo
