@@ -6,7 +6,7 @@
 /*   By: oheinzel <oheinzel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 15:21:56 by oheinzel          #+#    #+#             */
-/*   Updated: 2023/02/07 18:41:27 by oheinzel         ###   ########.fr       */
+/*   Updated: 2023/02/08 11:14:10 by oheinzel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ static t_param	*init_param(int argc, char *argv[])
 	new->time_to_eat = ft_atoi(argv[2], new);
 	new->time_to_sleep = ft_atoi(argv[3], new);
 	new->start = get_time();
+	new->loop = 1;
 	new->eat_count = 0;
 	new->notepme = -1;
 	if (argc == 6)

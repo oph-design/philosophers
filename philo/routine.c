@@ -6,7 +6,7 @@
 /*   By: oheinzel <oheinzel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 10:50:36 by oheinzel          #+#    #+#             */
-/*   Updated: 2023/02/07 18:35:52 by oheinzel         ###   ########.fr       */
+/*   Updated: 2023/02/08 11:21:18 by oheinzel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ static void	print_action(t_print action, t_philo *phil)
 		pthread_mutex_lock(&phil->param->stop);
 		pthread_mutex_unlock(&phil->param->stop);
 	}
+	if (phil->param->loop == 0 && action != death)
+		return ;
 	if (action == take_fork)
 		s = "\033[0;34mhas taken a fork\033[0;97m";
 	if (action == eating)
@@ -70,7 +72,7 @@ void	*routine(void *input)
 		print_action(thinking, phil);
 		usleep(30);
 	}
-	while (1)
+	while (phil->param->loop)
 		eat_sleep_think(phil);
 	return (NULL);
 }
@@ -97,14 +99,16 @@ void	*death_watch(void *input)
 		if (++i == param->nbr_philos)
 			i = 0;
 	pthread_mutex_lock(&param->stop);
+	param->loop = 0;
 	ft_usleep(1);
 	if (param->eat_count == param->notepme)
 		print_action(eaten, &phils[i]);
 	else
 		print_action(death, &phils[i]);
 	i = param->nbr_philos;
+	pthread_mutex_unlock(&param->stop);
 	while (i--)
-		pthread_detach(phils[i].thr);
+		pthread_join(phils[i].thr, NULL);
 	while (i < param->nbr_philos)
 		pthread_mutex_destroy(&phils[i++].r_fork);
 	pthread_mutex_destroy(&param->eating);
