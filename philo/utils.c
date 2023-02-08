@@ -6,7 +6,7 @@
 /*   By: oheinzel <oheinzel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 10:14:38 by oheinzel          #+#    #+#             */
-/*   Updated: 2023/02/07 18:04:15 by oheinzel         ###   ########.fr       */
+/*   Updated: 2023/02/08 18:52:48 by oheinzel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,19 @@ void	ft_exit(char *mess, t_philo *phils, t_param *param, long ph_count)
 	write(2, mess, len);
 	write(2, "\n", 1);
 	exit(1);
+}
+
+int	handle_edgecases(t_print action, t_philo *phil, int *crusty)
+{
+	if (action != death && action != eaten)
+		pthread_mutex_lock(&phil->param->stop);
+	if (action != death && action != eaten && !phil->param->loop && crusty)
+		return (*crusty = 0, pthread_mutex_unlock(&phil->param->stop), 1);
+	if (action != death && action != eaten)
+		pthread_mutex_unlock(&phil->param->stop);
+	if (action == death && phil->param->nbr_philos == 1)
+		pthread_mutex_unlock(&phil->r_fork);
+	return (0);
 }
 
 long	get_time(void)

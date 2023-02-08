@@ -6,13 +6,13 @@
 #    By: oheinzel <oheinzel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/27 15:12:51 by oheinzel          #+#    #+#              #
-#    Updated: 2023/02/08 11:22:47 by oheinzel         ###   ########.fr        #
+#    Updated: 2023/02/08 18:22:22 by oheinzel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		= philo
 CC			= cc
-CFLAGS		= -Wall -Werror -Wextra
+CFLAGS		= -Wall -Werror -Wextra #-fsanitize=thread
 RM			= rm -f
 
 GREEN		= \033[0;32m
