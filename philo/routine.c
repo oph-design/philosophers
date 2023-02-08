@@ -6,7 +6,7 @@
 /*   By: oheinzel <oheinzel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 10:50:36 by oheinzel          #+#    #+#             */
-/*   Updated: 2023/02/08 11:45:06 by oheinzel         ###   ########.fr       */
+/*   Updated: 2023/02/08 13:40:15 by oheinzel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@ static void	print_action(t_print action, t_philo *phil)
 {
 	char	*s;
 
+	s = NULL;
 	if (action != death && action != eaten)
-	{
 		pthread_mutex_lock(&phil->param->stop);
+	if (action != death && action != eaten)
 		pthread_mutex_unlock(&phil->param->stop);
-	}
-	if (phil->param->loop == 0 && action != death && action != eaten)
+	if (action != death && action != eaten && !phil->param->loop)
 		return ;
 	if (action == death && phil->param->nbr_philos == 1)
 		pthread_mutex_unlock(&phil->r_fork);
@@ -48,12 +48,12 @@ static void	eat_sleep_think(t_philo *phil)
 	print_action(take_fork, phil);
 	pthread_mutex_lock(phil->l_fork);
 	print_action(take_fork, phil);
-	if (phil->param->notepme)
-		print_action(eating, phil);
-	phil->has_eaten = get_time();
 	pthread_mutex_lock(&phil->param->eating);
 	if (phil->param->notepme)
 		phil->param->eat_count += 1;
+	if (phil->param->notepme)
+		print_action(eating, phil);
+	phil->has_eaten = get_time();
 	pthread_mutex_unlock(&phil->param->eating);
 	ft_usleep(phil->param->time_to_eat);
 	pthread_mutex_unlock(&phil->r_fork);
@@ -83,9 +83,14 @@ void	*routine(void *input)
 
 static int	check_death(t_philo *phils, t_param *param, unsigned int i)
 {
-	return (get_time() - phils[i].has_eaten < param->time_to_die
-		&& ((param->notepme >= 0 && param->eat_count < param->notepme)
-			|| param->notepme < 0));
+	int	death_time;
+	int	max_eat;
+	int	notepme_init;
+
+	death_time = get_time() - phils[i].has_eaten < param->time_to_die;
+	max_eat = param->eat_count < param->notepme;
+	notepme_init = param->notepme < 0;
+	return (death_time && ((max_eat && !notepme_init) || notepme_init));
 }
 
 void	*death_watch(void *input)
