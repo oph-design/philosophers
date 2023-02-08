@@ -6,7 +6,7 @@
 /*   By: oheinzel <oheinzel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 10:50:36 by oheinzel          #+#    #+#             */
-/*   Updated: 2023/02/08 18:53:57 by oheinzel         ###   ########.fr       */
+/*   Updated: 2023/02/08 18:56:29 by oheinzel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,28 +96,26 @@ void	*death_watch(void *input)
 {
 	unsigned int	i;
 	t_philo			*phils;
-	t_param			*param;
 
 	i = 0;
 	phils = input;
-	param = phils->param;
-	while (check_death(phils, param, i))
-		if (++i == param->nbr_philos)
+	while (check_death(phils, phils->param, i))
+		if (++i == phils->param->nbr_philos)
 			i = 0;
-	pthread_mutex_lock(&param->stop);
-	param->loop = 0;
+	pthread_mutex_lock(&phils->param->stop);
+	phils->param->loop = 0;
 	ft_usleep(1);
-	if (param->eat_count == param->notepme)
+	if (phils->param->eat_count == phils->param->notepme)
 		print_action(eaten, &phils[i], NULL);
 	else
 		print_action(death, &phils[i], NULL);
-	i = param->nbr_philos;
-	pthread_mutex_unlock(&param->stop);
-	pthread_mutex_unlock(&param->eating);
+	i = phils->param->nbr_philos;
+	pthread_mutex_unlock(&phils->param->stop);
+	pthread_mutex_unlock(&phils->param->eating);
 	while (i--)
 		pthread_join(phils[i].thr, NULL);
-	while (i < param->nbr_philos)
+	while (i < phils->param->nbr_philos)
 		pthread_mutex_destroy(&phils[i++].r_fork);
-	pthread_mutex_destroy(&param->eating);
-	return (pthread_mutex_destroy(&param->stop), NULL);
+	pthread_mutex_destroy(&phils->param->eating);
+	return (pthread_mutex_destroy(&phils->param->stop), NULL);
 }
