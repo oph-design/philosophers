@@ -6,7 +6,7 @@
 /*   By: oheinzel <oheinzel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 15:21:56 by oheinzel          #+#    #+#             */
-/*   Updated: 2023/02/09 19:49:53 by oheinzel         ###   ########.fr       */
+/*   Updated: 2023/02/09 19:55:11 by oheinzel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ static t_param	*init_param(int argc, char *argv[])
 	new->time_to_die = ft_atoi(argv[1]);
 	new->time_to_eat = ft_atoi(argv[2]);
 	new->time_to_sleep = ft_atoi(argv[3]);
-	if (new->nbr_philos < 1 || new->time_to_die < 1 || new->time_to_sleep < 1)
+	if (new->nbr_philos < 1 || new->time_to_die < 1
+		|| new->time_to_sleep < 1 || new->time_to_eat < 1)
 		return (ft_exit("wrong input", NULL, new, 0), NULL);
 	new->start = get_time();
 	new->loop = 1;
