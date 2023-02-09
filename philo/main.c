@@ -6,7 +6,7 @@
 /*   By: oheinzel <oheinzel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 15:21:56 by oheinzel          #+#    #+#             */
-/*   Updated: 2023/02/09 19:47:05 by oheinzel         ###   ########.fr       */
+/*   Updated: 2023/02/09 19:49:53 by oheinzel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,8 @@ int	main(int argc, char *argv[])
 	while (i++ < param->nbr_philos)
 		if (pthread_create(&(phils[i - 1].thr), NULL, &routine, &phils[i - 1]))
 			return (ft_exit("thread init", phils, param, param->nbr_philos), 1);
-	pthread_create(&thr, NULL, &death_watch, phils);
+	if (pthread_create(&thr, NULL, &death_watch, phils))
+		return (ft_exit("thread init", phils, param, param->nbr_philos), 1);
 	pthread_join(thr, NULL);
 	free(phils);
 	free(param);
