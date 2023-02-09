@@ -6,7 +6,7 @@
 /*   By: oheinzel <oheinzel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 10:50:36 by oheinzel          #+#    #+#             */
-/*   Updated: 2023/02/09 13:22:03 by oheinzel         ###   ########.fr       */
+/*   Updated: 2023/02/09 18:34:03 by oheinzel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ static void	eat_sleep_think(t_philo *phil, int *blean)
 		phil->param->eat_count += 1;
 	if (phil->param->notepme)
 		print_action(eating, phil, blean);
-	pthread_mutex_unlock(&phil->param->eating);
 	phil->has_eaten = get_time();
+	pthread_mutex_unlock(&phil->param->eating);
 	msleep(phil->param->time_to_eat);
 	pthread_mutex_unlock(&phil->r_fork);
 	pthread_mutex_unlock(phil->l_fork);
@@ -64,9 +64,9 @@ void	*routine(void *input)
 
 	phil = input;
 	blean = 1;
+	write(1, "\033[0;97m", 7);
 	if ((phil->id) % 2 == 0)
 	{
-		write(1, "\033[0;97m", 7);
 		print_action(thinking, phil, &blean);
 		msleep(3);
 	}
@@ -83,8 +83,6 @@ static int	check_death(t_philo *phils, t_param *param, unsigned int i)
 	int	max_eat;
 	int	notepme_init;
 
-	if (i == 0)
-		msleep(param->time_to_die);
 	pthread_mutex_lock(&param->eating);
 	death_time = get_time() - phils[i].has_eaten < param->time_to_die;
 	max_eat = param->eat_count < param->notepme;

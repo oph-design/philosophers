@@ -6,13 +6,13 @@
 /*   By: oheinzel <oheinzel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 10:14:38 by oheinzel          #+#    #+#             */
-/*   Updated: 2023/02/09 13:20:39 by oheinzel         ###   ########.fr       */
+/*   Updated: 2023/02/09 18:31:09 by oheinzel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	ft_atoi(const char *str, t_param *param)
+int	ft_atoi(const char *str)
 {
 	int	i;
 	int	r;
@@ -21,8 +21,6 @@ int	ft_atoi(const char *str, t_param *param)
 	r = 0;
 	while ((47 < str[i]) && (str[i] < 58))
 		r = r * 10 + (str[i++] - 48);
-	if (r < 0)
-		ft_exit("error: integer overflow", NULL, param, 0);
 	return (r);
 }
 
@@ -44,7 +42,6 @@ void	ft_exit(char *mess, t_philo *phils, t_param *param, long ph_count)
 	write(2, "\033[0;31m", 7);
 	write(2, mess, len);
 	write(2, "\n", 1);
-	exit(1);
 }
 
 int	handle_edgecases(t_print action, t_philo *phil, int *blean)

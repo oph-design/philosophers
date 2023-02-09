@@ -6,7 +6,7 @@
 /*   By: oheinzel <oheinzel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 15:18:06 by oheinzel          #+#    #+#             */
-/*   Updated: 2023/02/09 13:21:22 by oheinzel         ###   ########.fr       */
+/*   Updated: 2023/02/09 18:31:18 by oheinzel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ typedef struct s_philo
 	pthread_mutex_t	r_fork;
 }					t_philo;
 
-int		ft_atoi(const char *str, t_param *param);
+int		ft_atoi(const char *str);
 void	ft_exit(char *mess, t_philo *phil, t_param *param, long ph_count);
 int		handle_edgecases(t_print action, t_philo *phil, int *blean);
 long	get_time(void);
