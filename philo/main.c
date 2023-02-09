@@ -6,7 +6,7 @@
 /*   By: oheinzel <oheinzel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 15:21:56 by oheinzel          #+#    #+#             */
-/*   Updated: 2023/02/09 18:32:13 by oheinzel         ###   ########.fr       */
+/*   Updated: 2023/02/09 19:47:05 by oheinzel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,17 +42,17 @@ static t_param	*init_param(int argc, char *argv[])
 
 	new = malloc(sizeof(t_param));
 	if (new == NULL)
-		return (ft_exit("error: struct init fail", NULL, NULL, 0), NULL);
+		return (ft_exit("struct init", NULL, NULL, 0), NULL);
 	if (pthread_mutex_init(&new->stop, NULL))
-		return (ft_exit("error: mutex init fail", NULL, new, 0), NULL);
+		return (ft_exit("mutex init", NULL, new, 0), NULL);
 	if (pthread_mutex_init(&new->eating, NULL))
-		return (ft_exit("error: mutex init fail", NULL, new, 0), NULL);
+		return (ft_exit("mutex init", NULL, new, 0), NULL);
 	new->nbr_philos = ft_atoi(argv[0]);
 	new->time_to_die = ft_atoi(argv[1]);
 	new->time_to_eat = ft_atoi(argv[2]);
 	new->time_to_sleep = ft_atoi(argv[3]);
 	if (new->nbr_philos < 1 || new->time_to_die < 1 || new->time_to_sleep < 1)
-		return (ft_exit("error: wrong input", NULL, new, 0), NULL);
+		return (ft_exit("wrong input", NULL, new, 0), NULL);
 	new->start = get_time();
 	new->loop = 1;
 	new->eat_count = 0;
@@ -70,7 +70,7 @@ static t_philo	*create_philos(t_param *param)
 	i = 0;
 	new = malloc(sizeof(t_philo) * (param->nbr_philos));
 	if (new == NULL)
-		return (ft_exit("error: struct init fail", NULL, param, 0), NULL);
+		return (ft_exit("struct init", NULL, param, 0), NULL);
 	while (i < param->nbr_philos)
 	{
 		new[i].id = i + 1;
@@ -80,7 +80,7 @@ static t_philo	*create_philos(t_param *param)
 		if (i != 0)
 			new[i].l_fork = &new[i - 1].r_fork;
 		if (pthread_mutex_init(&(new[i++].r_fork), NULL))
-			return (ft_exit("error: mutex init fail", new, param, i), NULL);
+			return (ft_exit("mutex init", new, param, i), NULL);
 	}
 	new[0].l_fork = &new[i - 1].r_fork;
 	return (new);
@@ -96,7 +96,7 @@ int	main(int argc, char *argv[])
 	i = 0;
 	thr = 0;
 	if (check_input(argc, ++argv))
-		return (ft_exit("error: wrong input", NULL, NULL, 0), 1);
+		return (ft_exit("wrong input", NULL, NULL, 0), 1);
 	param = init_param(argc, argv);
 	if (param == NULL)
 		return (1);
@@ -105,7 +105,7 @@ int	main(int argc, char *argv[])
 		return (1);
 	while (i++ < param->nbr_philos)
 		if (pthread_create(&(phils[i - 1].thr), NULL, &routine, &phils[i - 1]))
-			return (ft_exit("error: thr", phils, param, param->nbr_philos), 1);
+			return (ft_exit("thread init", phils, param, param->nbr_philos), 1);
 	pthread_create(&thr, NULL, &death_watch, phils);
 	pthread_join(thr, NULL);
 	free(phils);

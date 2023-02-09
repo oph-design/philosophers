@@ -6,7 +6,7 @@
 /*   By: oheinzel <oheinzel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 10:14:38 by oheinzel          #+#    #+#             */
-/*   Updated: 2023/02/09 19:38:59 by oheinzel         ###   ########.fr       */
+/*   Updated: 2023/02/09 19:45:32 by oheinzel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	ft_exit(char *mess, t_philo *phils, t_param *param, long ph_count)
 	free(phils);
 	free(param);
 	write(2, "\033[0;31m", 7);
+	write(2, "error:", 6);
 	write(2, mess, len);
 	write(2, "\n\033[0;97m", 8);
 }
