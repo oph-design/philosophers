@@ -6,7 +6,7 @@
 /*   By: oheinzel <oheinzel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 10:14:38 by oheinzel          #+#    #+#             */
-/*   Updated: 2023/02/08 18:52:48 by oheinzel         ###   ########.fr       */
+/*   Updated: 2023/02/09 13:20:39 by oheinzel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,12 @@ void	ft_exit(char *mess, t_philo *phils, t_param *param, long ph_count)
 	exit(1);
 }
 
-int	handle_edgecases(t_print action, t_philo *phil, int *crusty)
+int	handle_edgecases(t_print action, t_philo *phil, int *blean)
 {
 	if (action != death && action != eaten)
 		pthread_mutex_lock(&phil->param->stop);
-	if (action != death && action != eaten && !phil->param->loop && crusty)
-		return (*crusty = 0, pthread_mutex_unlock(&phil->param->stop), 1);
+	if (action != death && action != eaten && !phil->param->loop && blean)
+		return (*blean = 0, pthread_mutex_unlock(&phil->param->stop), 1);
 	if (action != death && action != eaten)
 		pthread_mutex_unlock(&phil->param->stop);
 	if (action == death && phil->param->nbr_philos == 1)
@@ -68,7 +68,7 @@ long	get_time(void)
 	return (time.tv_sec * 1000 + time.tv_usec / 1000);
 }
 
-void	ft_usleep(long sleep)
+void	msleep(long sleep)
 {
 	long	start;
 

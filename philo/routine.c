@@ -6,18 +6,18 @@
 /*   By: oheinzel <oheinzel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 10:50:36 by oheinzel          #+#    #+#             */
-/*   Updated: 2023/02/08 18:56:29 by oheinzel         ###   ########.fr       */
+/*   Updated: 2023/02/09 13:22:03 by oheinzel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static void	print_action(t_print action, t_philo *phil, int *crusty)
+static void	print_action(t_print action, t_philo *phil, int *blean)
 {
 	char	*s;
 
 	s = NULL;
-	if (handle_edgecases(action, phil, crusty))
+	if (handle_edgecases(action, phil, blean))
 		return ;
 	if (action == take_fork)
 		s = "\033[0;34mhas taken a fork\033[0;97m";
@@ -36,42 +36,42 @@ static void	print_action(t_print action, t_philo *phil, int *crusty)
 
 /* ************** philosopher routine ************** */
 
-static void	eat_sleep_think(t_philo *phil, int *crusty)
+static void	eat_sleep_think(t_philo *phil, int *blean)
 {
 	pthread_mutex_lock(&phil->r_fork);
-	print_action(take_fork, phil, crusty);
+	print_action(take_fork, phil, blean);
 	pthread_mutex_lock(phil->l_fork);
-	print_action(take_fork, phil, crusty);
+	print_action(take_fork, phil, blean);
 	pthread_mutex_lock(&phil->param->eating);
 	if (phil->param->notepme)
 		phil->param->eat_count += 1;
 	if (phil->param->notepme)
-		print_action(eating, phil, crusty);
-	phil->has_eaten = get_time();
+		print_action(eating, phil, blean);
 	pthread_mutex_unlock(&phil->param->eating);
-	ft_usleep(phil->param->time_to_eat);
+	phil->has_eaten = get_time();
+	msleep(phil->param->time_to_eat);
 	pthread_mutex_unlock(&phil->r_fork);
 	pthread_mutex_unlock(phil->l_fork);
-	print_action(sleeping, phil, crusty);
-	ft_usleep(phil->param->time_to_sleep);
-	print_action(thinking, phil, crusty);
+	print_action(sleeping, phil, blean);
+	msleep(phil->param->time_to_sleep);
+	print_action(thinking, phil, blean);
 }
 
 void	*routine(void *input)
 {
 	t_philo	*phil;
-	int		crusty;
+	int		blean;
 
 	phil = input;
-	crusty = 1;
+	blean = 1;
 	if ((phil->id) % 2 == 0)
 	{
 		write(1, "\033[0;97m", 7);
-		print_action(thinking, phil, &crusty);
-		usleep(30);
+		print_action(thinking, phil, &blean);
+		msleep(3);
 	}
-	while (crusty)
-		eat_sleep_think(phil, &crusty);
+	while (blean)
+		eat_sleep_think(phil, &blean);
 	return (NULL);
 }
 
@@ -83,11 +83,13 @@ static int	check_death(t_philo *phils, t_param *param, unsigned int i)
 	int	max_eat;
 	int	notepme_init;
 
+	if (i == 0)
+		msleep(param->time_to_die);
 	pthread_mutex_lock(&param->eating);
 	death_time = get_time() - phils[i].has_eaten < param->time_to_die;
 	max_eat = param->eat_count < param->notepme;
 	notepme_init = param->notepme < 0;
-	if (max_eat || death_time)
+	if (death_time && ((max_eat && !notepme_init) || notepme_init))
 		pthread_mutex_unlock(&param->eating);
 	return (death_time && ((max_eat && !notepme_init) || notepme_init));
 }
@@ -104,8 +106,9 @@ void	*death_watch(void *input)
 			i = 0;
 	pthread_mutex_lock(&phils->param->stop);
 	phils->param->loop = 0;
-	ft_usleep(1);
-	if (phils->param->eat_count == phils->param->notepme)
+	msleep(1);
+	if (phils->param->eat_count >= phils->param->notepme
+		&& phils->param->notepme > 0)
 		print_action(eaten, &phils[i], NULL);
 	else
 		print_action(death, &phils[i], NULL);

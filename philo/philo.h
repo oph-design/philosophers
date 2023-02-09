@@ -6,7 +6,7 @@
 /*   By: oheinzel <oheinzel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 15:18:06 by oheinzel          #+#    #+#             */
-/*   Updated: 2023/02/08 18:53:00 by oheinzel         ###   ########.fr       */
+/*   Updated: 2023/02/09 13:21:22 by oheinzel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,11 @@ typedef struct s_philo
 }					t_philo;
 
 int		ft_atoi(const char *str, t_param *param);
+void	ft_exit(char *mess, t_philo *phil, t_param *param, long ph_count);
+int		handle_edgecases(t_print action, t_philo *phil, int *blean);
+long	get_time(void);
+void	msleep(long sleep);
 void	*routine(void *input);
 void	*death_watch(void *input);
-void	ft_exit(char *mess, t_philo *phil, t_param *param, long ph_count);
-int		handle_edgecases(t_print action, t_philo *phil, int *crusty);
-long	get_time(void);
-void	ft_usleep(long sleep);
 
 #endif
