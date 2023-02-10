@@ -6,7 +6,7 @@
 /*   By: oheinzel <oheinzel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 15:18:06 by oheinzel          #+#    #+#             */
-/*   Updated: 2023/02/09 18:31:18 by oheinzel         ###   ########.fr       */
+/*   Updated: 2023/02/10 11:25:14 by oheinzel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ typedef struct s_param
 	unsigned int	time_to_die;
 	unsigned int	time_to_eat;
 	unsigned int	time_to_sleep;
-	int				loop;
+	int				kill_threads;
 	long			start;
 	long			notepme;
 	unsigned int	eat_count;
@@ -55,7 +55,7 @@ typedef struct s_philo
 
 int		ft_atoi(const char *str);
 void	ft_exit(char *mess, t_philo *phil, t_param *param, long ph_count);
-int		handle_edgecases(t_print action, t_philo *phil, int *blean);
+int		handle_edgecases(t_print action, t_philo *phil, int *running);
 long	get_time(void);
 void	msleep(long sleep);
 void	*routine(void *input);
