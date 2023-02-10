@@ -6,7 +6,7 @@
 /*   By: oheinzel <oheinzel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 10:14:38 by oheinzel          #+#    #+#             */
-/*   Updated: 2023/02/10 11:26:15 by oheinzel         ###   ########.fr       */
+/*   Updated: 2023/02/10 14:28:20 by oheinzel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,27 +22,6 @@ int	ft_atoi(const char *str)
 	while ((47 < str[i]) && (str[i] < 58))
 		r = r * 10 + (str[i++] - 48);
 	return (r);
-}
-
-void	ft_exit(char *mess, t_philo *phils, t_param *param, long ph_count)
-{
-	long	len;
-
-	len = 0;
-	while (mess[len])
-		len++;
-	while (phils != NULL && ph_count--)
-		pthread_mutex_destroy(&phils[ph_count].r_fork);
-	if (param != NULL)
-		pthread_mutex_destroy(&param->stop);
-	if (param != NULL)
-		pthread_mutex_destroy(&param->eating);
-	free(phils);
-	free(param);
-	write(2, "\033[0;31m", 7);
-	write(2, "error:", 6);
-	write(2, mess, len);
-	write(2, "\n\033[0;97m", 8);
 }
 
 int	handle_edgecases(t_print action, t_philo *phil, int *running)

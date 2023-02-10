@@ -6,7 +6,7 @@
 /*   By: oheinzel <oheinzel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 15:18:06 by oheinzel          #+#    #+#             */
-/*   Updated: 2023/02/10 11:25:14 by oheinzel         ###   ########.fr       */
+/*   Updated: 2023/02/10 14:26:45 by oheinzel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,5 +60,6 @@ long	get_time(void);
 void	msleep(long sleep);
 void	*routine(void *input);
 void	*death_watch(void *input);
+void	aboard_threads(t_philo *phils, t_param *param);
 
 #endif
