@@ -6,7 +6,7 @@
 /*   By: oheinzel <oheinzel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 14:26:08 by oheinzel          #+#    #+#             */
-/*   Updated: 2023/02/10 14:28:57 by oheinzel         ###   ########.fr       */
+/*   Updated: 2023/02/10 14:32:09 by oheinzel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	aboard_threads(t_philo *phils, t_param *param)
 {
-	int	i;
+	unsigned int	i;
 
 	i = 0;
 	pthread_mutex_lock(&param->stop);

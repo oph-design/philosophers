@@ -6,7 +6,7 @@
 /*   By: oheinzel <oheinzel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 15:21:56 by oheinzel          #+#    #+#             */
-/*   Updated: 2023/02/10 11:25:39 by oheinzel         ###   ########.fr       */
+/*   Updated: 2023/02/10 14:31:52 by oheinzel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static t_param	*init_param(int argc, char *argv[])
 
 	new = malloc(sizeof(t_param));
 	if (new == NULL)
-		return (ft_exit("struct init", NULL, NULL, 0), NULL);
+		return (ft_exit("struct malloc", NULL, NULL, 0), NULL);
 	if (pthread_mutex_init(&new->stop, NULL))
 		return (ft_exit("mutex init", NULL, new, 0), NULL);
 	if (pthread_mutex_init(&new->eating, NULL))
@@ -53,7 +53,7 @@ static t_param	*init_param(int argc, char *argv[])
 	new->time_to_sleep = ft_atoi(argv[3]);
 	if (new->nbr_philos < 1 || new->time_to_die < 1
 		|| new->time_to_sleep < 1 || new->time_to_eat < 1)
-		return (ft_exit("wrong input", NULL, new, 0), NULL);
+		return (ft_exit("false param(s)", NULL, new, 0), NULL);
 	new->start = get_time();
 	new->kill_threads = 1;
 	new->eat_count = 0;
@@ -71,7 +71,7 @@ static t_philo	*create_philos(t_param *param)
 	i = 0;
 	new = malloc(sizeof(t_philo) * (param->nbr_philos));
 	if (new == NULL)
-		return (ft_exit("struct init", NULL, param, 0), NULL);
+		return (ft_exit("struct malloc", NULL, param, 0), NULL);
 	while (i < param->nbr_philos)
 	{
 		new[i].id = i + 1;
@@ -97,7 +97,7 @@ int	main(int argc, char *argv[])
 	i = 0;
 	thr = 0;
 	if (check_input(argc, ++argv))
-		return (ft_exit("wrong input", NULL, NULL, 0), 1);
+		return (ft_exit("false param(s)", NULL, NULL, 0), 1);
 	param = init_param(argc, argv);
 	if (param == NULL)
 		return (1);
