@@ -6,7 +6,7 @@
 /*   By: oheinzel <oheinzel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 10:50:36 by oheinzel          #+#    #+#             */
-/*   Updated: 2023/02/10 11:25:27 by oheinzel         ###   ########.fr       */
+/*   Updated: 2023/02/13 08:00:52 by oheinzel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static void	eat_sleep_think(t_philo *phil, int *running)
 	pthread_mutex_lock(phil->l_fork);
 	print_action(take_fork, phil, running);
 	pthread_mutex_lock(&phil->param->eating);
-	if (phil->param->notepme)
+	if (phil->param->notepme > 0)
 		phil->param->eat_count += 1;
 	if (phil->param->notepme)
 		print_action(eating, phil, running);
@@ -106,7 +106,7 @@ void	*death_watch(void *input)
 	phils->param->kill_threads = 0;
 	msleep(1);
 	if (phils->param->eat_count >= phils->param->notepme
-		&& phils->param->notepme > 0)
+		&& phils->param->notepme >= 0)
 		print_action(eaten, &phils[i], NULL);
 	else
 		print_action(death, &phils[i], NULL);
