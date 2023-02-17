@@ -30,7 +30,7 @@ static void	print_action(t_print action, t_philo *phil, int *running)
 	if (action == death)
 		s = "\033[0;31mdied\033[0;97m";
 	if (action == eaten)
-		s = "\033[0;33mand everyone else have eaten enough\033[0;97m";
+		s = "\033[0;33mand everyone else has eaten enough\033[0;97m";
 	printf("%ld philo %u: %s\n", get_time() - phil->param->start, phil->id, s);
 }
 
